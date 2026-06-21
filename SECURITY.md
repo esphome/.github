@@ -12,6 +12,23 @@ but understand that ESPHome, like many open source projects, is relying heavily 
 volunteers that aren’t full-time resources. We may not be able to respond as quickly as you 
 would like due to other responsibilities.
 
+## CHECK THE THREAT MODEL FIRST
+
+Before reporting, please check whether the repository in question publishes a
+`THREAT_MODEL.md` and read it — it defines what is and isn't in scope for that
+project. At the time of writing, [esphome/esphome](https://github.com/esphome/esphome/blob/dev/THREAT_MODEL.md)
+and [esphome/device-builder](https://github.com/esphome/device-builder/blob/main/docs/THREAT_MODEL.md)
+have one.
+
+In particular, ESPHome treats anyone who can supply or edit a configuration as
+**trusted with full code execution on the host** — this is by design (for
+example, `external_components:` imports arbitrary Python, and the build toolchain
+shells out). Issues that only require the ability to edit a config — such as
+template/`${...}` substitution injection, `!include` / `packages:` /
+`dashboard_import:` behavior, or the validator crashing on hostile YAML — are
+therefore **not** vulnerabilities and do not need a private report. See the
+relevant `THREAT_MODEL.md` for the full rationale and the surface we do defend.
+
 ## SUPPORTED VERSIONS
 
 We only accept reports against the latest stable & official versions of ESPHome or any versions 
